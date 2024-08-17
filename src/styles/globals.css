@@ -18,16 +18,33 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Additional styles for Leaflet marker icons */
+.leaflet-marker-icon {
+  background-image: url('../../public/leaflet/marker-shadow.png');
+}
+
+/* styles/globals.css */
+.leaflet-marker-icon {
+  background-image: url('/leaflet/marker-icon.png');
+  background-size: cover;
+  /* Ensures the image covers the marker */
+}
+
+.leaflet-marker-icon.leaflet-marker-icon-2x {
+  background-image: url('/leaflet/marker-icon-2x.png');
+}
+
+.leaflet-marker-icon.leaflet-marker-shadow {
+  background-image: url('/leaflet/marker-shadow.png');
 }
