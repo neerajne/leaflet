@@ -1,9 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { useState, useCallback, useRef } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-// Fix for default marker icon
+
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -22,20 +22,18 @@ const markers = [
   { position: [12.9716, 77.5946], label: "Bangalore" },
 ];
 
-function ChangeView({ center }) {
-  const map = useMap();
-  useEffect(() => {
-    map.flyTo(center, 8, {
-      duration: 2, // Duration of animation in seconds
-    });
-  }, [center, map]);
-  return null;
-}
-
 export default function Map() {
-  const [center, setCenter] = useState([20.5937, 78.9629]);
+  const [center, setCenter] = useState([20.5937, 78.9629]); 
+  const mapRef = useRef(null);
 
   const handleMarkerClick = useCallback((position) => {
+    const map = mapRef.current;
+    if (map) {
+      map.flyTo(position, map.getZoom(), {
+        duration: 0.5, 
+        easeLinearity: 0.5,
+      });
+    }
     setCenter(position);
   }, []);
 
@@ -44,12 +42,12 @@ export default function Map() {
       center={center}
       zoom={5}
       style={{ height: "500px", width: "100%" }}
+      ref={mapRef}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      <ChangeView center={center} />
       {markers.map((marker, index) => (
         <Marker
           key={index}

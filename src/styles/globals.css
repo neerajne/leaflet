@@ -29,16 +29,15 @@ body {
   }
 }
 
-/* Additional styles for Leaflet marker icons */
 .leaflet-marker-icon {
   background-image: url('../../public/leaflet/marker-shadow.png');
 }
 
-/* styles/globals.css */
+
 .leaflet-marker-icon {
   background-image: url('/leaflet/marker-icon.png');
   background-size: cover;
-  /* Ensures the image covers the marker */
+
 }
 
 .leaflet-marker-icon.leaflet-marker-icon-2x {
